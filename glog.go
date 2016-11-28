@@ -76,7 +76,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/alext29/err"
+	errs "github.com/alext29/errors"
 	"io"
 	stdLog "log"
 	"os"
@@ -643,7 +643,7 @@ func (l *loggingT) print(s severity, args ...interface{}) {
 
 func (l *loggingT) printDepth(s severity, depth int, args ...interface{}) {
 	if len(args) == 1 {
-		if e, ok := args[0].(*err.Error); ok {
+		if e, ok := args[0].(*errs.Error); ok {
 			l.printe(s, e)
 			return
 		}
@@ -665,7 +665,7 @@ func (l *loggingT) printf(s severity, format string, args ...interface{}) {
 	l.output(s, buf, file, line, false)
 }
 
-func (l *loggingT) printe(s severity, err *err.Error) {
+func (l *loggingT) printe(s severity, err *errs.Error) {
 	d := err.Depth()
 	for i := 0; i < d; i++ {
 		file, line, time := err.Header(i)
